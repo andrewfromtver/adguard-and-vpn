@@ -1,4 +1,4 @@
-# how to:
+# how to
 
 * Add `.env` & `.creds` files (in `./` folder)
 * Execute deploy script`./deploy.sh`
@@ -27,7 +27,7 @@
 * `NGINX_USERNAME=admin`
 * `NGINX_PASSWORD_HASH=<password_hash_check_NGINX_docs>`
 
-# http pages:
+# http pages
 
 *AdGuard web UI*
 `http://{GLOBAL_VPN_ADDRESS}`
