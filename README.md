@@ -27,7 +27,7 @@
 * `NGINX_USERNAME=admin`
 * `NGINX_PASSWORD_HASH=<password_hash_check_NGINX_docs>`
 
-# how to:
+# http pages:
 
 *AdGuard web UI*
 `http://{GLOBAL_VPN_ADDRESS}`
