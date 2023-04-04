@@ -1,0 +1,91 @@
+version: "3.9"
+
+networks:
+  vpn-app:
+    driver: bridge
+    ipam:
+     config:
+      - subnet: ${LOCAL_SUBNET}
+        gateway: ${LOCAL_GATEWAY}
+
+services:
+  # NGINX web server
+  private-vpn-nginx:
+    image: nginx
+    container_name: private-vpn-nginx
+    dns:
+      - ${ADGUARD_DNS_IP}
+    depends_on:
+      open-vpn-node-1:
+        condition: service_healthy
+      adguard-home:
+        condition: service_healthy
+    volumes:
+      - ./.app_data/custompasswd:/etc/nginx/custompasswd
+      - ./nginx/src:/usr/share/nginx/html/get-vpn
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/templates:/etc/nginx/templates
+      - ./.app_data/nginx_log:/var/log/nginx
+      - ./.app_data/vpn:/usr/share/nginx/html/vpn
+    ports:
+      - "0.0.0.0:80:80"
+    networks:
+      vpn-app:
+        ipv4_address: ${LOCAL_NGINX_IP}
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 0.1G
+
+  # VPN server
+  open-vpn-node-1:
+    build:
+      context: ./
+      dockerfile: ./openvpn/Dockerfile
+    container_name: open-vpn-node-1
+    privileged: true
+    dns:
+      - ${ADGUARD_DNS_IP}
+    environment:
+      HOST_ADDR: ${GLOBAL_VPN_ADDRESS}
+      HOST_TUN_PORT: ${GLOBAL_VPN_PORT}
+    ports:
+      - "0.0.0.0:${GLOBAL_VPN_PORT}:1194/udp"
+    networks:
+      vpn-app:
+        ipv4_address: ${LOCAL_VPN_IP}
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 0.1G
+    healthcheck:
+      test: netstat -an | grep 1194 > /dev/null; if [ 0 != $? ]; then exit 1; fi;
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # AdGuard
+  adguard-home:
+    image: adguard/adguardhome
+    container_name: adguard-home
+    volumes:
+      - ./.app_data/adguard/work:/opt/adguardhome/work
+      - ./.app_data/adguard/conf:/opt/adguardhome/conf
+    networks:
+      vpn-app:
+        ipv4_address: ${ADGUARD_DNS_IP}
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+    healthcheck:
+      test: wget --quiet --tries=1 --spider http://adguard-home || exit
+      interval: 10s
+      timeout: 5s
+      retries: 5
