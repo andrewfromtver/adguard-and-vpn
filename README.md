@@ -1,7 +1,7 @@
 # how to:
 
-* Add `.env` & `.creds` files (in `./` folder) *
-* Execute deploy script`./deploy.sh` *
+* Add `.env` & `.creds` files (in `./` folder)
+* Execute deploy script`./deploy.sh`
 
 # .env params
 
