@@ -5,7 +5,7 @@
 
 # .env params
 
-# how to:
+*Global IpV4 settings*
 * `GLOBAL_VPN_ADDRESS=xxx.xxx.xxx.xxx`
 * `GLOBAL_VPN_PORT=5001`
 
