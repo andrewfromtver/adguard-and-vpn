@@ -5,7 +5,7 @@
 
 # .env params
 
-*Global IpV4 settings*
+# how to:
 * `GLOBAL_VPN_ADDRESS=xxx.xxx.xxx.xxx`
 * `GLOBAL_VPN_PORT=5001`
 
@@ -26,3 +26,11 @@
 *NGINX creds*
 * `NGINX_USERNAME=admin`
 * `NGINX_PASSWORD_HASH=<password_hash_check_NGINX_docs>`
+
+# how to:
+
+*AdGuard web UI*
+`http://{GLOBAL_VPN_ADDRESS}`
+
+*Open VPN config download page*
+`http://{GLOBAL_VPN_ADDRESS}/get-vpn`
