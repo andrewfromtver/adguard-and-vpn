@@ -43,8 +43,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1"
-          memory: 0.1G
+          cpus: "0.25"
+          memory: 0.075G
 
   # VPN server
   open-vpn-node-1:
@@ -67,8 +67,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1"
-          memory: 0.1G
+          cpus: "0.1"
+          memory: 0.05G
     healthcheck:
       test: netstat -an | grep 1194 > /dev/null; if [ 0 != $? ]; then exit 1; fi;
       interval: 10s
@@ -89,8 +89,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1"
-          memory: 1G
+          cpus: "0.25"
+          memory: 0.25G
     healthcheck:
       test: wget --quiet --tries=1 --spider http://adguard-home || exit
       interval: 10s
@@ -121,7 +121,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1"
+          cpus: "0.1"
           memory: 0.05G
     healthcheck:
       test: wget --quiet --tries=1 --spider http://node-exporter:9100 || exit
@@ -151,7 +151,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1"
+          cpus: "0.1"
           memory: 0.05G
     healthcheck:
       test: wget --quiet --tries=1 --spider http://prometheus:9090 || exit
@@ -178,8 +178,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "1"
-          memory: 0.05G
+          cpus: "0.1"
+          memory: 0.15G
     healthcheck:
       test: wget --quiet --tries=1 --spider http://grafana-local-server:3000 || exit
       interval: 10s
