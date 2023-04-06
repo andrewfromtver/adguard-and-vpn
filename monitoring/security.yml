@@ -1,0 +1,2 @@
+basic_auth_users:
+  ADGUARD_USERNAME: ADGUARD_PASSWORD_HASH

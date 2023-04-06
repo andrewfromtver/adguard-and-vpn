@@ -8,5 +8,8 @@ scrape_configs:
       - targets: ['prometheus:9090']
 
   - job_name: 'linux_metrics'
+    basic_auth:
+      username: ADGUARD_USERNAME
+      password: ADGUARD_PASSWORD
     static_configs:
       - targets: ['EXPORTER_ADDRESS:9100']
