@@ -21,7 +21,7 @@ NGINX_USERNAME=$(cat ./.creds | grep NGINX_USERNAME | cut -d "=" -f 2)
 NGINX_PASSWORD_HASH=$(cat ./.creds | grep NGINX_PASSWORD_HASH | cut -d "=" -f 2)
 ADGUARD_DNS_IP=$(cat ./.env | grep ADGUARD_DNS_IP | cut -d "=" -f 2)
 OPENVPN_SERVER_SUBNET=$(cat ./.env | grep OPENVPN_SERVER_SUBNET | cut -d "=" -f 2)
-GLOBAL_VPN_ADDRESS=$(cat ./.env | grep GLOBAL_VPN_ADDRESS | cut -d "=" -f 2)
+EXPORTER_ADDRESS=$(hostname -I | cut -d " " -f 1)
 
 mkdir -p ./.app_data/adguard/conf/
 mkdir -p ./.app_data/custompasswd/
@@ -42,7 +42,7 @@ sed -i "s/NGINX_PASSWORD_HASH/$NGINX_PASSWORD_HASH/g" ./.app_data/custompasswd/.
 sed -i "s/ADGUARD_DNS_IP/$ADGUARD_DNS_IP/g" ./.app_data/openvpn/conf/server.conf
 sed -i "s/OPENVPN_SERVER_SUBNET/$OPENVPN_SERVER_SUBNET/g" ./.app_data/openvpn/conf/server.conf
 
-sed -i "s/GLOBAL_VPN_ADDRESS/$GLOBAL_VPN_ADDRESS/g" ./.app_data/monitoring/prometheus.yml
+sed -i "s/EXPORTER_ADDRESS/$EXPORTER_ADDRESS/g" ./.app_data/monitoring/prometheus.yml
 
 docker compose -p private-vpn down --remove-orphans
 docker compose -p private-vpn build
