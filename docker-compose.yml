@@ -103,20 +103,14 @@ services:
     container_name: node-exporter
     dns:
       - ${ADGUARD_DNS_IP}
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
+    pid: host
     command:
-      - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--path.rootfs=/host'
+    volumes:
+      - '/:/host:ro,rslave'
     expose:
       - 9100
-    networks:
-      vpn-app:
-        ipv4_address: ${EXPORTER_IP}
+    network_mode: host
     restart: unless-stopped
     deploy:
       resources:
@@ -124,7 +118,7 @@ services:
           cpus: "0.1"
           memory: 0.75G
     healthcheck:
-      test: wget --quiet --tries=1 --spider http://node-exporter:9100 || exit
+      test: wget --quiet --tries=1 --spider http://localhost:9100 || exit
       interval: 10s
       timeout: 5s
       retries: 5
@@ -135,7 +129,7 @@ services:
     dns:
       - ${ADGUARD_DNS_IP}
     volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./.app_data/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -168,9 +162,9 @@ services:
       GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER}
       GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
     volumes:
-      - ./monitoring/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
-      - ./monitoring/main-dashboard.json:/var/lib/grafana/dashboards/main-dashboard.json
-      - ./monitoring/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./.app_data/monitoring/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./.app_data/monitoring/main-dashboard.json:/var/lib/grafana/dashboards/main-dashboard.json
+      - ./.app_data/monitoring/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
     networks:
       vpn-app:
         ipv4_address: ${GRAFANA_IP}
