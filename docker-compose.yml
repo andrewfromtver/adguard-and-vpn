@@ -1,5 +1,9 @@
 version: "3.9"
 
+volumes:
+  grafana:
+  prometheus:
+
 networks:
   vpn-app:
     driver: bridge
@@ -130,6 +134,7 @@ services:
       - ${ADGUARD_DNS_IP}
     volumes:
       - ./.app_data/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -165,6 +170,7 @@ services:
       - ./.app_data/monitoring/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
       - ./.app_data/monitoring/main-dashboard.json:/var/lib/grafana/dashboards/main-dashboard.json
       - ./.app_data/monitoring/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - grafana:/var/lib/grafana
     networks:
       vpn-app:
         ipv4_address: ${GRAFANA_IP}
