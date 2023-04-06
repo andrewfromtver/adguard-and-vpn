@@ -26,6 +26,7 @@ GLOBAL_VPN_ADDRESS=$(cat ./.env | grep GLOBAL_VPN_ADDRESS | cut -d "=" -f 2)
 mkdir -p ./.app_data/adguard/conf/
 mkdir -p ./.app_data/custompasswd/
 mkdir -p ./.app_data/openvpn/conf/
+mkdir -p ./.app_data/monitoring/
 
 cp ./adguard/AdGuardHome.yaml ./.app_data/adguard/conf/AdGuardHome.yaml
 cp ./nginx/.htpasswd ./.app_data/custompasswd/.htpasswd
