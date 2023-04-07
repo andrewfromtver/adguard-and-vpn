@@ -16,7 +16,6 @@
 * `LOCAL_VPN_IP=10.5.0.10`
 * `ADGUARD_DNS_IP=10.5.0.2`
 * `OPENVPN_SERVER_SUBNET=10.8.0.0 255.255.255.0`
-* `EXPORTER_IP=10.5.0.100`
 * `PROMETHEUS_IP=10.5.0.101`
 * `GRAFANA_IP=10.5.0.102`
 
@@ -30,9 +29,14 @@
 * `ADGUARD_USERNAME=admin`
 * `ADGUARD_PASSWORD_HASH=<password_hash_check_AdGuard_docs>`
 
+*Prometheus creds*
+* `PROMETHEUS_USERNAME=admin`
+* `PROMETHEUS_PASSWORD_HASH=<password_hash_check_Node-exporter_docs>`
+* `PROMETHEUS_PASSWD=qwerty12`
+
 *NGINX creds*
 * `NGINX_USERNAME=admin`
-* `NGINX_PASSWORD_HASH=<password_hash_check_NGINX_docs>`
+* `NGINX_PASSWORD_HASH=<password_hash_check_Nginx_docs>`
 
 # http pages
 
@@ -41,3 +45,9 @@
 
 *Open VPN config download page*
 `http://{GLOBAL_VPN_ADDRESS}/get-vpn`
+
+*Grafana web UI*
+`http://{GLOBAL_VPN_ADDRESS}:3000`
+
+*Prometheus Node-exporter metrics*
+`http://{GLOBAL_VPN_ADDRESS}:9100/metrics`
