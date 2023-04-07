@@ -10,6 +10,6 @@ scrape_configs:
   - job_name: 'linux_metrics'
     basic_auth:
       username: PROMETHEUS_USERNAME
-      password: PROMETHEUS_PASSWORD
+      password: PROMETHEUS_PASSWD
     static_configs:
       - targets: ['EXPORTER_ADDRESS:9100']
