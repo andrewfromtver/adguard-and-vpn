@@ -17,7 +17,9 @@ echo ''
 
 ADGUARD_USERNAME=$(cat ./.creds | grep ADGUARD_USERNAME | cut -d "=" -f 2)
 ADGUARD_PASSWORD_HASH=$(cat ./.creds | grep ADGUARD_PASSWORD_HASH | cut -d "=" -f 2)
-ADGUARD_PASSWORD=$(cat ./.creds | grep ADGUARD_PASSWORD | cut -d "=" -f 2)
+PROMETHEUS_USERNAME=$(cat ./.creds | grep PROMETHEUS_USERNAME | cut -d "=" -f 2)
+PROMETHEUS_PASSWORD_HASH=$(cat ./.creds | grep PROMETHEUS_PASSWORD_HASH | cut -d "=" -f 2)
+PROMETHEUS_PASSWD=$(cat ./.creds | grep PROMETHEUS_PASSWD | cut -d "=" -f 2)
 NGINX_USERNAME=$(cat ./.creds | grep NGINX_USERNAME | cut -d "=" -f 2)
 NGINX_PASSWORD_HASH=$(cat ./.creds | grep NGINX_PASSWORD_HASH | cut -d "=" -f 2)
 ADGUARD_DNS_IP=$(cat ./.env | grep ADGUARD_DNS_IP | cut -d "=" -f 2)
@@ -44,11 +46,11 @@ sed -i "s/ADGUARD_DNS_IP/$ADGUARD_DNS_IP/g" ./.app_data/openvpn/conf/server.conf
 sed -i "s/OPENVPN_SERVER_SUBNET/$OPENVPN_SERVER_SUBNET/g" ./.app_data/openvpn/conf/server.conf
 
 sed -i "s/EXPORTER_ADDRESS/$EXPORTER_ADDRESS/g" ./.app_data/monitoring/prometheus.yml
-sed -i "s/ADGUARD_USERNAME/$ADGUARD_USERNAME/g" ./.app_data/monitoring/prometheus.yml
-sed -i "s/ADGUARD_PASSWORD/$ADGUARD_PASSWORD/g" ./.app_data/monitoring/prometheus.yml
+sed -i "s/PROMETHEUS_USERNAME/$PROMETHEUS_USERNAME/g" ./.app_data/monitoring/prometheus.yml
+sed -i "s/PROMETHEUS_PASSWD/$PROMETHEUS_PASSWD/g" ./.app_data/monitoring/prometheus.yml
 
-sed -i "s/ADGUARD_USERNAME/$ADGUARD_USERNAME/g" ./.app_data/monitoring/security.yml
-sed -i "s/ADGUARD_PASSWORD_HASH/$ADGUARD_PASSWORD_HASH/g" ./.app_data/monitoring/security.yml
+sed -i "s/PROMETHEUS_USERNAME/$PROMETHEUS_USERNAME/g" ./.app_data/monitoring/security.yml
+sed -i "s/PROMETHEUS_PASSWORD_HASH/$PROMETHEUS_PASSWORD_HASH/g" ./.app_data/monitoring/security.yml
 
 docker compose -p private-vpn down --remove-orphans
 docker compose -p private-vpn build
