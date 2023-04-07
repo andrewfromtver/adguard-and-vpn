@@ -34,7 +34,7 @@
 * `PROMETHEUS_PASSWORD_HASH=<password_hash_check_Node-exporter_docs>`
 * `PROMETHEUS_PASSWD=qwerty12`
 
-*NGINX creds*
+*Nginx creds*
 * `NGINX_USERNAME=admin`
 * `NGINX_PASSWORD_HASH=<password_hash_check_Nginx_docs>`
 
