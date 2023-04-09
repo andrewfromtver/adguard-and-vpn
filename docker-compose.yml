@@ -81,7 +81,7 @@ services:
 
   # AdGuard
   adguard-home:
-    image: adguard/adguardhome
+    image: adguard/adguardhome:v0.107.27
     container_name: adguard-home
     volumes:
       - ./.app_data/adguard/work:/opt/adguardhome/work
@@ -103,7 +103,7 @@ services:
 
   # Monitoring
   node-exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v1.5.0
     container_name: node-exporter
     dns:
       - ${ADGUARD_DNS_IP}
@@ -130,7 +130,7 @@ services:
       retries: 5
 
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.43.0
     container_name: prometheus
     dns:
       - ${ADGUARD_DNS_IP}
@@ -161,7 +161,7 @@ services:
       retries: 5
 
   grafana-local-server:
-    image: grafana/grafana
+    image: grafana/grafana:9.2.15
     container_name: grafana-local-server
     dns:
       - ${ADGUARD_DNS_IP}
