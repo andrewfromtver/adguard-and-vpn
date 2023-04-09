@@ -44,11 +44,11 @@ services:
       vpn-app:
         ipv4_address: ${LOCAL_NGINX_IP}
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: "0.25"
-          memory: 0.05G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "0.25"
+    #       memory: 0.05G
 
   # VPN server
   open-vpn-node-1:
@@ -68,11 +68,11 @@ services:
       vpn-app:
         ipv4_address: ${LOCAL_VPN_IP}
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 0.05G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: 0.05G
     healthcheck:
       test: netstat -an | grep 1194 > /dev/null; if [ 0 != $? ]; then exit 1; fi;
       interval: 10s
@@ -90,11 +90,11 @@ services:
       vpn-app:
         ipv4_address: ${ADGUARD_DNS_IP}
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 0.25G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "0.5"
+    #       memory: 0.25G
     healthcheck:
       test: wget --quiet --tries=1 --spider http://adguard-home || exit
       interval: 10s
@@ -118,11 +118,11 @@ services:
       - 9100
     network_mode: host
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 0.75G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: 0.75G
     healthcheck:
       test: netstat -an | grep 9100 > /dev/null; if [ 0 != $? ]; then exit 1; fi;
       interval: 10s
@@ -149,11 +149,11 @@ services:
       vpn-app:
         ipv4_address: ${PROMETHEUS_IP}
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 0.75G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: 0.75G
     healthcheck:
       test: wget --quiet --tries=1 --spider http://prometheus:9090 || exit
       interval: 10s
@@ -177,11 +177,11 @@ services:
       vpn-app:
         ipv4_address: ${GRAFANA_IP}
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 0.25G
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "0.5"
+    #       memory: 0.25G
     healthcheck:
       test: wget --quiet --tries=1 --spider http://grafana-local-server:3000 || exit
       interval: 10s
